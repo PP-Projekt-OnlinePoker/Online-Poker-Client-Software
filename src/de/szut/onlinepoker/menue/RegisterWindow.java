@@ -39,7 +39,6 @@ public class RegisterWindow {
 		registerLabel = new JLabel("Registieren");
 		registerLabel.setBounds(182, 10, 68, 19);
 		
-		
 		mailText = new JTextField("Mail Addresse");
 		mailText.setBounds(132, 91, 165, 40);
 		mailText.setColumns(10);
