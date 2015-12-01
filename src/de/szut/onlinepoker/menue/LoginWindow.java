@@ -30,7 +30,7 @@ public class LoginWindow {
 		imageBackground = new JLabel();
 		imageBackground.setBounds(0, 0, 594, 362);
 		
-		imageBackground.setIcon(new ImageIcon("bin/image/image.png"));
+		imageBackground.setIcon(new ImageIcon("bin/image/image.jpg"));
 		
 		
 		nameText = new JTextField("Name");
