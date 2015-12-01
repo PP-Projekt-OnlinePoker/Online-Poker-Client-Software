@@ -12,12 +12,6 @@ public class TischLobby {
 	private JFrame frame;
 
 	
-	
-	
-	
-	
-	
-	
 	public static void main(String[] args) {		
 		TischLobby window = new TischLobby();
 		window.frame.setVisible(true);
