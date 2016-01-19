@@ -1,17 +1,24 @@
-package de.szut.dqi12.poker;
+package de.szut.onlinepoker;
 
 import org.lwjgl.Sys;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
-import java.nio.ByteBuffer;
+import java.awt.*;
+import java.io.IOException;
+import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Main {
+
 
     public static void main(String[] args) {
         new Main().run();
@@ -21,11 +28,13 @@ public class Main {
     private GLFWErrorCallback errorCallback;
     private GLFWKeyCallback keyCallback;
 
+    private Texture cardTexture;
+
     // The window handle
     private long window;
 
     public void run() {
-                System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
+        System.out.println("Running LWJGL " + Sys.getVersion());
 
         try {
             init();
@@ -34,6 +43,8 @@ public class Main {
             // Release window and window callbacks
             glfwDestroyWindow(window);
             keyCallback.release();
+        } catch(IOException ex) {
+
         } finally {
             // Terminate GLFW and release the GLFWerrorfun
             glfwTerminate();
@@ -41,7 +52,9 @@ public class Main {
         }
     }
 
-    private void init() {
+    private void init() throws IOException{
+        cardTexture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/meineTextur.png"));
+
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         glfwSetErrorCallback(errorCallback = errorCallbackPrint(System.err));
@@ -55,13 +68,17 @@ public class Main {
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // the window will be resizable
 
-        int WIDTH = 300;
-        int HEIGHT = 300;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        int WIDTH = (int) screenSize.getWidth();
+        int HEIGHT = (int) screenSize.getHeight() - 70;
 
         // Create the window
         window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World!", NULL, NULL);
-        if ( window == NULL )
+
+        if ( window == NULL ){
             throw new RuntimeException("Failed to create the GLFW window");
+        }
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(window, keyCallback = new GLFWKeyCallback() {
@@ -74,6 +91,7 @@ public class Main {
 
         // Get the resolution of the primary monitor
         ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
         // Center our window
         glfwSetWindowPos(
                 window,
@@ -83,6 +101,7 @@ public class Main {
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
+
         // Enable v-sync
         glfwSwapInterval(1);
 
@@ -105,8 +124,8 @@ public class Main {
         // the window or has pressed the ESCAPE key.
         while ( glfwWindowShouldClose(window) == GL_FALSE ) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-
             glfwSwapBuffers(window); // swap the color buffers
+            
 
             // Poll for window events. The key callback above will only be
             // invoked during this call.
