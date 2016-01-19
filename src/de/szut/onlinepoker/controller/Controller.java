@@ -2,19 +2,19 @@ package de.szut.onlinepoker.controller;
 
 import de.szut.onlinepoker.model.Login;
 import de.szut.onlinepoker.model.Register;
+import de.szut.onlinepoker.model.Table;
 
 public class Controller {
 
-	private Controller inst;
+	private static Controller inst;
 	
 	private Controller(){
 		
 	}
 	
-	public Controller getInstance(){
+	public static Controller getInstance(){
 		if(inst==null){
 			inst = new Controller();
-			init();
 		}
 		return inst;
 	}
@@ -74,4 +74,9 @@ public class Controller {
 	public void createTableClicked(){
 		
 	}
+	
+	public void createTable(Table t){
+		
+	}
+	
 }
