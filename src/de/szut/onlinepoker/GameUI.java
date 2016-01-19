@@ -17,12 +17,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.system.MemoryUtil.*;
 
-public class Main {
-
-
-    public static void main(String[] args) {
-        new Main().run();
-    }
+public class GameUI {
 
     // We need to strongly reference callback instances.
     private GLFWErrorCallback errorCallback;
