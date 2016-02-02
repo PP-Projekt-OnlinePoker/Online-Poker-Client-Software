@@ -16,7 +16,7 @@ public class TischLobby {
 		TischLobby window = new TischLobby();
 		window.frame.setVisible(true);
 }
-	
+	//mehmet ist ein hrnshn
 	
 	public TischLobby(){
 		frame =  new JFrame();
