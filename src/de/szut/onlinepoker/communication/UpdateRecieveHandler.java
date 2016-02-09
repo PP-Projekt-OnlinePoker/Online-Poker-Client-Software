@@ -35,5 +35,9 @@ public class UpdateRecieveHandler implements Runnable{
 		}
 		
 	}
+	
+	public void stop(){
+		terminated=true;
+	}
 
 }
