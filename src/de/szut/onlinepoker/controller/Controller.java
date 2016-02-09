@@ -72,25 +72,9 @@ public class Controller {
 		Event e = new Event(r.getUsername(), r.getPassword(), r.getEmail(), r.getRealName());
 	}
 	
-	public void allInClicked(){
-		Event e  = new Event()
-	}
 	
-	public void foldClicked(){
 		
-	}
 	
-	public void callClicked(){
-		
-	}
-	
-	/**
-	 * 
-	 * @param amount raise by
-	 */
-	public void raiseCLicked(int amount){
-		
-	}
 	
 	public void logOutClicked(){
 		
@@ -104,14 +88,7 @@ public class Controller {
 		
 	}
 	
-	public void betClicked(int amount){
 		
-	}
-	
-	public void checkClicked(){
-		
-	}
-	
 	public void createTableClicked(){
 		
 	}
