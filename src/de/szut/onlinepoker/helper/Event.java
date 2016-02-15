@@ -1,11 +1,17 @@
 
 package de.szut.onlinepoker.helper;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import de.szut.onlinepoker.action.AllIn;
+import de.szut.onlinepoker.action.Bet;
+import de.szut.onlinepoker.action.Call;
+import de.szut.onlinepoker.action.Check;
+import de.szut.onlinepoker.action.Fold;
+import de.szut.onlinepoker.action.LeaveTable;
+import de.szut.onlinepoker.action.LogOut;
+import de.szut.onlinepoker.action.Raise;
 import de.szut.onlinepoker.model.Player;
 import de.szut.onlinepoker.model.Table;
 import net.sf.json.JSONArray;
@@ -27,17 +33,23 @@ public class Event {
 	public static final String EVENT_TABLENAME = "tablename";
 	public static final String EVENT_RESULT = "result";
 	public static final String EVENT_TABLES = "tables";
+	public static final String MAX_BET = "maxbet";
+	public static final String MAX_PLAYER = "maxplayer";
+	public static final String SMALL_BLIND = "smallbind";
 	
-	private Integer tableId;
-	private Integer playerId;
-	private PacketType type;
-	private JSONObject json;
-	private CommWay commWay;
-	private Player player;
-	private Socket socket;
-	private String error;
-	private boolean result;
-	private Integer amount;
+	private Integer tableId=null;
+	private Integer playerId=null;
+	private PacketType type=null;
+	private JSONObject json=null;
+	private CommWay commWay=null;
+	private Player player=null;
+	private Socket socket=null;
+	private String error=null;
+	private boolean result=false;
+	private Integer amount=null;
+	private Object email;
+	private Object password;
+	private Object username;
 	
 	/**
 	 * Server constructor, when the server receives the Packet, this constructor is called.
@@ -127,6 +139,108 @@ public class Event {
 		this.commWay = CommWay.ANSWER;
 	}
 	
+	/**
+	 * Call
+	 * @param c
+	 */
+	public Event(Call c){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.CALL);
+		json.put(Event.EVENT_PLAYERID, c.playerID);
+		json.put(Event.EVENT_TABLEID, c.tableID);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	public Event(Check c){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.CHECK);
+		json.put(Event.EVENT_PLAYERID, c.playerID);
+		json.put(Event.EVENT_TABLEID, c.tableID);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	/**
+	 * Raise
+	 * @param r
+	 */
+	public Event(Raise r){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.RAISE);
+		json.put(Event.EVENT_PLAYERID, r.playerId);
+		json.put(Event.EVENT_TABLEID, r.tableId);
+		json.put(Event.EVENT_AMOUNT, r.amount);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	/**
+	 * Bet
+	 * @param b
+	 */
+	public Event(Bet b){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.BET);
+		json.put(Event.EVENT_PLAYERID, b.playerId);
+		json.put(Event.EVENT_TABLEID, b.tableId);
+		json.put(Event.EVENT_AMOUNT, b.amount);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	/**
+	 * Fold
+	 * @param f
+	 */
+	public Event(Fold f){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.FOLD);
+		json.put(Event.EVENT_PLAYERID, f.playerId);
+		json.put(Event.EVENT_TABLEID, f.tableId);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	/**
+	 * Logout
+	 * @param o
+	 */
+	public Event(LogOut o){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.LOGOUT);
+		json.put(Event.EVENT_PLAYERID, o.playerId);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	/**
+	 * AllIn
+	 * @param a
+	 */
+	public Event(AllIn a){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.FOLD);
+		json.put(Event.EVENT_PLAYERID, a.playerId);
+		json.put(Event.EVENT_TABLEID, a.tableId);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	
+	/**
+	 * Create table
+	 * @param tc
+	 */
+	public Event(TableConfiguration tc){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.CREATETABLE);
+		json.put(Event.EVENT_TABLENAME, tc.getName());
+		json.put(Event.MAX_BET, tc.getMaxBet());
+		json.put(Event.MAX_PLAYER, tc.getMaxPlayer());
+		json.put(Event.SMALL_BLIND, tc.getSmallBlind());
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	
+	
+	
+	/**
+	 * LeaveTable
+	 * @param a
+	 */
+	public Event(LeaveTable a) {
+		json.put(Event.EVENT_PACKETTYPE, PacketType.LEAVETABLE);
+		json.put(Event.EVENT_PLAYERID, a.playerId);
+		json.put(Event.EVENT_TABLEID, a.tableId);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+
 	public static Event fromString(String json, Socket client){
 		Event event = new Event(json, client);
 		JSONObject obj = JSONObject.fromObject(json);
@@ -169,38 +283,8 @@ public class Event {
 	}
 	
 	public String getJSONString(){
-		JSONObject obj =new JSONObject();
-		switch(this.type){
-		case ALLIN:
-			break;
-		case BET:
-			break;
-		case CALL:
-			break;
-		case CHECK:
-			break;
-		case CREATETABLE:
-			break;
-		case FOLD:
-			break;
-		case GETTABLELIST:
-			break;
-		case JOINTABLE:
-			break;
-		case LOGIN:
-			break;
-		case LOGOUT:
-			break;
-		case RAISE:
-			break;
-		case REGISTER:
-			break;
-		case STATUS:
-			break;
-		default:
-			break;
-		}
-		return obj.toString();
+		
+		return json.toString();
 	}
 	
 	public PacketType getType(){

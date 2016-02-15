@@ -12,6 +12,7 @@ public class TableConfiguration {
 	private int maxPlayer;
 	private int ID;
 	private int smallBlind;
+	private String name;
 	public int getMaxBet() {
 		return maxBet;
 	}
@@ -58,6 +59,14 @@ public class TableConfiguration {
 	public void setSmallBlind(int smallBlind) {
 		this.smallBlind = smallBlind;
 	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
 	
+	public void setName(String name){
+		this.name=name;
+	}
 	
 }

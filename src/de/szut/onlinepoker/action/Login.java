@@ -1,4 +1,4 @@
-package de.szut.onlinepoker.model;
+package de.szut.onlinepoker.action;
 
 public class Login {
 

@@ -3,13 +3,13 @@ package de.szut.onlinepoker.controller;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import de.szut.onlinepoker.action.Login;
+import de.szut.onlinepoker.action.Register;
 import de.szut.onlinepoker.communication.Protocoll;
 import de.szut.onlinepoker.communication.RecieveHandler;
 import de.szut.onlinepoker.communication.UpdateRecieveHandler;
 import de.szut.onlinepoker.helper.Event;
 import de.szut.onlinepoker.helper.TableConfiguration;
-import de.szut.onlinepoker.model.Login;
-import de.szut.onlinepoker.model.Register;
 import de.szut.onlinepoker.model.Table;
 import net.sf.json.JSONObject;
 
@@ -35,7 +35,7 @@ public class Controller {
 		return inst;
 	}
 	
-	private void init(){
+	public void init(){
 		ip = "127.0.0.1";
 		try {
 			p = new Protocoll(ip, PORT);
@@ -106,6 +106,10 @@ public class Controller {
 	public void error(String string) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public Protocoll getProtocoll(){
+		return p;
 	}
 	
 }
