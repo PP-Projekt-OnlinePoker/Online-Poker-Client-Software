@@ -6,7 +6,11 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
+
+import de.szut.onlinepoker.action.Register;
+import de.szut.onlinepoker.controller.Controller;
 
 public class RegisterWindow {
 
@@ -15,42 +19,57 @@ public class RegisterWindow {
 	private JLabel registerLabel; 
 	private JTextField mailText;
 	private JTextField nameText;
+	private JTextField usernameText;
 	private JButton finishButton;
 	private JButton cancelButton;
 	
-	/**
-	 * Launch the application.
-	 */
+	private static RegisterWindow instance = null;
 	
-	public static void main(String[] args) {		
-					RegisterWindow window = new RegisterWindow();
-					window.frame.setVisible(true);
+	public void clear(){
+		nameText.setText("Name");
+		usernameText.setText("Username");
+		passwordText.setText("Password");
+		mailText.setText("Mail Adresse");
+	}
+	
+	public JFrame getFrame(){
+		return frame;
+	}
+	
+	public static RegisterWindow getInstance(){
+		if(instance == null){
+			instance = new RegisterWindow();
+		}
+		return instance;
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public RegisterWindow() {
+	private RegisterWindow() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		registerLabel = new JLabel("Registieren");
-		registerLabel.setBounds(182, 10, 68, 19);
-		
-		mailText = new JTextField("Mail Addresse");
-		mailText.setBounds(132, 91, 165, 40);
-		mailText.setColumns(10);
+		registerLabel = new JLabel("Registrieren");
+		registerLabel.setBounds(182, 0, 165, 19);
 		
 		nameText = new JTextField("Name");
-		nameText.setBounds(132, 40, 165, 40);
+		nameText.setBounds(132, 20, 165, 20);
 		
 		nameText.setColumns(10);
 		
+		usernameText = new JTextField("Username");
+		usernameText.setBounds(132, 60, 165, 20);
+		
 		passwordText = new JPasswordField("Password");
-		passwordText.setBounds(132, 142, 165, 40);
+		passwordText.setBounds(132, 100, 165, 20);
 		passwordText.setColumns(10);
+		
+		mailText = new JTextField("Mail Addresse");
+		mailText.setBounds(132, 140, 165, 20);
+		mailText.setColumns(10);
 		
 		
 		finishButton = new JButton("Finish");
@@ -66,13 +85,33 @@ public class RegisterWindow {
 		frame.getContentPane().add(nameText);
 		frame.getContentPane().add(passwordText);
 		frame.getContentPane().add(registerLabel);
+		frame.getContentPane().add(usernameText);
 		
 		
 		finishButton.addActionListener(new ActionListener() {
-	         public void actionPerformed(ActionEvent e) {
-	        	 System.out.println(passwordText.getText());
-	         }          
-	      });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//create a register object
+				Register register = new Register();
+				register.setEmail(mailText.getText());
+				register.setPassword(passwordText.getPassword().toString());
+				register.setRealName(nameText.getText());
+				register.setUsername(usernameText.getText());
 				
+				//give it to the controller for further processing
+				Controller.getInstance().registerClicked(register);
+				
+				frame.setVisible(false);
+				RegisterWindow.getInstance().clear();
+			}          
+	    });
+		
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				frame.setVisible(false);
+				RegisterWindow.getInstance().clear();
+			}
+		});
 	}
 }

@@ -13,6 +13,7 @@ import de.szut.onlinepoker.communication.RecieveHandler;
 import de.szut.onlinepoker.communication.UpdateRecieveHandler;
 import de.szut.onlinepoker.helper.Event;
 import de.szut.onlinepoker.helper.TableConfiguration;
+import de.szut.onlinepoker.menue.LoginWindow;
 import de.szut.onlinepoker.model.Table;
 import net.sf.json.JSONObject;
 
@@ -151,7 +152,7 @@ public class Controller {
 	 * @param string error
 	 */
 	public void error(String string) {
-		// TODO Auto-generated method stub
+		LoginWindow.getInstance().displayError(string);
 		
 	}
 	
