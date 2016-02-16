@@ -1,8 +1,8 @@
 package de.szut.onlinepoker.controller;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
+import net.sf.json.JSONObject;
 import de.szut.onlinepoker.action.GetTableList;
 import de.szut.onlinepoker.action.JoinTable;
 import de.szut.onlinepoker.action.LogOut;
@@ -13,8 +13,8 @@ import de.szut.onlinepoker.communication.RecieveHandler;
 import de.szut.onlinepoker.communication.UpdateRecieveHandler;
 import de.szut.onlinepoker.helper.Event;
 import de.szut.onlinepoker.helper.TableConfiguration;
+import de.szut.onlinepoker.model.ShowDown;
 import de.szut.onlinepoker.model.Table;
-import net.sf.json.JSONObject;
 
 public class Controller {
 
@@ -144,7 +144,13 @@ public class Controller {
 		}
 	}
 
+	public void updateTable(Table t){
+		
+	}
 	
+	public void showDownTable(ShowDown s){
+		
+	}
 	
 	/**
 	 * shows an error

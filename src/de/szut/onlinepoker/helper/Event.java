@@ -39,6 +39,13 @@ public class Event {
 	public static final String MAX_PLAYER = "maxplayer";
 	public static final String SMALL_BLIND = "smallbind";
 	public static final String ERROR = "error";
+	public static final String POT = "potmoney";
+	public static final String PLAYER = "playerarr";
+	public static final String ISFOLD = "isfold";
+	public static final String CHIPS = "error";
+	public static final String CHIPS_BETTED = "error";
+	public static final String CARDS = "cards";
+	public static final String EMPTYSEAT = "empty";
 	
 	private Integer tableId=null;
 	private Integer playerId=null;
@@ -80,7 +87,7 @@ public class Event {
 		JSONObject tableObj = new JSONObject();
 		
 		for(Table t: tables){
-			tableObj.put(Event.EVENT_TABLEID, t.tablename);
+			tableObj.put(Event.EVENT_TABLEID, t.tableName);
 			tableObj.put(Event.EVENT_TABLENAME, t.tableId);
 			
 			arr.add(tableObj);

@@ -16,5 +16,6 @@ public enum PacketType {
 	CREATETABLE,
 	STATUS,
 	LEAVETABLE,
-	ANSWER
+	ANSWER,
+	END
 }
