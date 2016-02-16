@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import net.sf.json.JSONObject;
+
 public class UpdateRecieveHandler implements Runnable{
 	
 	private BufferedReader reader;
 	private boolean terminated;
-	
+	private JSONObject json;
 	
 	public UpdateRecieveHandler(InputStream in){
 		
@@ -20,7 +22,7 @@ public class UpdateRecieveHandler implements Runnable{
 	@Override
 	public void run(){
 		
-		String update;
+		String update = null;
 		
 		while(!terminated){
 			try {
@@ -32,6 +34,8 @@ public class UpdateRecieveHandler implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			json = JSONObject.fromObject(update);
+			
 		}
 		
 	}

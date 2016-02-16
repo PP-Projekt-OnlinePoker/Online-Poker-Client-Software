@@ -4,18 +4,20 @@ package de.szut.onlinepoker.helper;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import de.szut.onlinepoker.action.AllIn;
 import de.szut.onlinepoker.action.Bet;
 import de.szut.onlinepoker.action.Call;
 import de.szut.onlinepoker.action.Check;
 import de.szut.onlinepoker.action.Fold;
+import de.szut.onlinepoker.action.GetTableList;
+import de.szut.onlinepoker.action.JoinTable;
 import de.szut.onlinepoker.action.LeaveTable;
 import de.szut.onlinepoker.action.LogOut;
 import de.szut.onlinepoker.action.Raise;
 import de.szut.onlinepoker.model.Player;
 import de.szut.onlinepoker.model.Table;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 public class Event {
 
@@ -36,6 +38,7 @@ public class Event {
 	public static final String MAX_BET = "maxbet";
 	public static final String MAX_PLAYER = "maxplayer";
 	public static final String SMALL_BLIND = "smallbind";
+	public static final String ERROR = "error";
 	
 	private Integer tableId=null;
 	private Integer playerId=null;
@@ -150,6 +153,10 @@ public class Event {
 		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
 	}
 	
+	/**
+	 * Check
+	 * @param c
+	 */
 	public Event(Check c){
 		json.put(Event.EVENT_PACKETTYPE, PacketType.CHECK);
 		json.put(Event.EVENT_PLAYERID, c.playerID);
@@ -240,7 +247,28 @@ public class Event {
 		json.put(Event.EVENT_TABLEID, a.tableId);
 		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
 	}
-
+	
+	/**
+	 * JoinTable
+	 * @param jt
+	 */
+	public Event(JoinTable jt){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.JOINTABLE);
+		json.put(Event.EVENT_PLAYERID, jt.tableId);
+		json.put(Event.EVENT_TABLEID, jt.playerId);
+		json.put(Event.EVENT_STAKE, jt.stake);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
+	/**
+	 * Get Table List
+	 * @param gtl
+	 */
+	public Event(GetTableList gtl){
+		json.put(Event.EVENT_PACKETTYPE, PacketType.GETTABLELIST);
+		json.put(Event.EVENT_COMMWAY, CommWay.REQUEST);
+	}
+	
 	public static Event fromString(String json, Socket client){
 		Event event = new Event(json, client);
 		JSONObject obj = JSONObject.fromObject(json);
